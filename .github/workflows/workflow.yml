@@ -1,4 +1,4 @@
-name: Vulnerable Workflow
+name: Vulnerable Workflow Test
 
 on:
   pull_request_target:
@@ -6,16 +6,19 @@ on:
       - main
 
 jobs:
-  deploy:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
         uses: actions/checkout@v2
 
-      - name: Deploy Preview
+      - name: Process PR Metadata
         env:
-          SECRET: ${{ secrets.MY_SECRET }}
+          SECRET: ${{ secrets.TEST_SECRET }}
         run: |
-          # Using PR title in the command without sanitization
+          echo "Processing PR title: ${{ github.event.pull_request.title }}"
+          echo "Processing PR body: ${{ github.event.pull_request.body }}"
+          # Example command that uses untrusted input
           curl -X POST -H "Authorization: Bearer $SECRET" -d "title=${{ github.event.pull_request.title }}" https://example.com/deploy
+
 
