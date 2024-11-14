@@ -1,4 +1,4 @@
-name: Test Workflow
+name: Vulnerable Workflow
 
 on:
   pull_request_target:
@@ -12,6 +12,13 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
 
+      - name: Make deploy_script.sh executable
+        run: chmod +x ./run-tests.sh    
+
       - name: Run Tests
+        env:
+          SECRET: ${{ secrets.MY_SECRET }}
         run: |
-          echo "Running tests with secret: ${{ secrets.MY_SECRET }}"
+          echo "Testing with secret: $SECRET"  # Logs the secret
+          ./run-tests.sh
+
